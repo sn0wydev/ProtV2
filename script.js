@@ -1506,7 +1506,7 @@ const SpinWheel = {
 
     // Real outcome — decided here, from SPIN_PRIZES only.
     const winning = this.selectPrize();
-    const cubes   = Array.from(document.querySelectorAll('.cube'));
+    const cubes   = Array.from(document.querySelectorAll('#wheel .cube'));
     if (!cubes.length) { STATE.isSpinning = false; if (btn) btn.disabled = false; return; }
 
     // Repaint every cube for the spin visual — uses REAL odds so the
@@ -1712,6 +1712,7 @@ const VoidSpinWheel = {
   init() {
     this.populateCubes();
     this.startAnimation();
+    this.loadIcons();
   },
 
   selectPrize() {
@@ -1999,6 +2000,40 @@ const VoidSpinWheel = {
     if (claimBtn) claimBtn.disabled = false;
     const spinBtn = document.getElementById('voidSpinButton');
     if (spinBtn) spinBtn.disabled = false;
+  },
+
+  loadIcons() {
+    ['voidCoin1','voidCoin5','voidCoin10','voidCoin15','voidCoin25','voidCoin50','voidCoin100','voidCoin150'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const img = Object.assign(document.createElement('img'), { src: 'assets/Coin.svg', alt: 'Coin' });
+      img.style.cssText = 'width:100%;height:100%;object-fit:contain';
+      el.appendChild(img);
+    });
+
+    ['voidStars5','voidStars10','voidStars25'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const img = Object.assign(document.createElement('img'), { src: 'assets/TStars.svg', alt: 'Stars' });
+      img.style.cssText = 'width:100%;height:100%;object-fit:contain';
+      el.appendChild(img);
+    });
+
+    [
+      ['voidGiftHeart','Heart'], ['voidGiftBear','Bear'],
+      ['voidGiftCake','Cake'],   ['voidGiftRocket','Rocket'],
+      ['voidGiftNotepad','Star Notepad'], ['voidGiftRamen','Instant Ramen']
+    ].forEach(([id, giftName]) => {
+      const el = document.getElementById(id);
+      if (el) {
+        const img = Object.assign(document.createElement('img'), {
+          src: GIFT_SVG_ICONS[giftName] ?? '',
+          alt: giftName
+        });
+        img.style.cssText = 'width:100%;height:100%;object-fit:contain';
+        el.appendChild(img);
+      }
+    });
   }
 };
 

@@ -2342,6 +2342,36 @@ body.no-scroll {
 .spin-button:active  { transform: translateY(0); }
 .spin-button:disabled { opacity: 0.5; cursor: not-allowed; }
 
+.void-spin-button {
+  background: linear-gradient(135deg, #f472b6 0%, #a78bfa 100%);
+  box-shadow: 0 4px 20px rgba(244,114,182,0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.void-spin-button:hover {
+  box-shadow: 0 6px 30px rgba(244,114,182,0.55);
+}
+
+.spin-btn-star-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.spin-btn-cost {
+  font-weight: 800;
+}
+
+.spin-btn-divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255,255,255,0.35);
+  flex-shrink: 0;
+}
+
 .rewards-section { width: 100%; max-width: 600px; }
 
 .rewards-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
@@ -2611,6 +2641,118 @@ body.no-scroll {
 .gift-item.gift-common:hover {
   border-color: rgba(255,255,255,0.25);
 }
+
+/* ============================================
+   VOID SPIN — home grid entry card
+   Full-width banner (own row on desktop), styled
+   as a distinct "premium" sibling of the card-base
+   family: pink/violet duotone instead of any of the
+   5 accent colors already used above, so it can't be
+   mistaken for Daily Loot at a glance.
+   ============================================ */
+
+.content-box-void {
+  grid-column: 1 / -1;
+  grid-row: 5;
+  animation-delay: 0.95s;
+  border-color: rgba(244,114,182,0.28);
+  min-height: 170px;
+  display: flex;
+  align-items: center;
+}
+
+.content-box-void:hover {
+  border-color: rgba(244,114,182,0.5);
+  box-shadow: 0 12px 40px rgba(244,114,182,0.18);
+}
+
+.content-box-void .hl {
+  background: linear-gradient(135deg, #f472b6 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.content-box-void .card-btn,
+.void-spin-cta {
+  background: linear-gradient(135deg, #f472b6 0%, #a78bfa 100%);
+  color: #0d0d0e;
+  box-shadow: 0 4px 18px rgba(244,114,182,0.32);
+}
+
+.content-box-void .card-glow {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(244,114,182,0.09), transparent 70%);
+  top: -90px;
+  right: -70px;
+}
+
+.content-box-void .card-sparkle {
+  right: 44px;
+  top: 26px;
+  color: #f472b6;
+}
+
+.void-card-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  padding-left: 150px;
+  flex-wrap: wrap;
+}
+
+.void-card-text { max-width: 420px; }
+
+.void-asset-left {
+  width: 130px;
+  height: 130px;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-8deg);
+  filter: drop-shadow(0 8px 24px rgba(244,114,182,0.4));
+  animation: floatA 5s ease-in-out infinite;
+}
+
+.void-card-action {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+/* Reused on both the home card and the Void Spin page itself */
+.spin-cost-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(244,114,182,0.1);
+  border: 1px solid rgba(244,114,182,0.3);
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f9a8d4;
+  white-space: nowrap;
+}
+
+.spin-cost-badge img { width: 18px; height: 18px; }
+
+/* Insufficient-balance feedback on the Void Spin button */
+@keyframes shakeX {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+.shake { animation: shakeX 0.4s ease; }
+
+/* 3-column variant of .reward-grid, used for Void Spin's Star payouts
+   (8 coin denominations fill the default 4-col grid; 3 star ones don't) */
+.reward-grid--stars { grid-template-columns: repeat(3, 1fr); }
 
 /* ============================================
    DEPOSIT PAGE
@@ -3084,7 +3226,7 @@ input:checked + .toggle-slider::before { transform: translateX(22px); }
    ============================================ */
 
 .bottom-nav {
-  display: none; /* keep this off by default, mobile media query turns it on */
+  display: none; /* shown only under the 768px breakpoint below */
   position: fixed;
   left: 0;
   right: 0;
@@ -3214,6 +3356,7 @@ input:checked + .toggle-slider::before { transform: translateX(22px); }
   .content-box-left-1,
   .content-box-left-2,
   .content-box-right,
+  .content-box-void,
   .promo-card,
   .content-box-bottom-2 {
     grid-column: 1 !important;
@@ -3237,6 +3380,24 @@ input:checked + .toggle-slider::before { transform: translateX(22px); }
   .promo-card .card-inner { padding-left: 70px; padding-right: 100px; }
   .asset-left  { width: 100px; height: 100px; left: -14px; }
   .asset-right { width: 110px; height: 110px; }
+
+  /* Void Spin card: switch from horizontal to stacked layout, move the
+     floating asset from the left-middle to a small top-right badge */
+  .content-box-void { min-height: auto; }
+  .void-card-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 0;
+    padding-top: 100px;
+    gap: 1.25rem;
+  }
+  .void-asset-left {
+    width: 90px; height: 90px;
+    left: auto; right: 1.5rem; top: 1.25rem;
+    transform: rotate(-8deg);
+  }
+  .void-card-action { width: 100%; justify-content: space-between; }
+  .reward-grid--stars { grid-template-columns: repeat(3, 1fr); }
 
   .inventory-grid { grid-template-columns: repeat(2, 1fr); }
   .inventory-stats { grid-template-columns: 1fr; gap: 0.75rem; padding: 1rem 1.5rem; }
@@ -3282,6 +3443,7 @@ input:checked + .toggle-slider::before { transform: translateX(22px); }
   .asset-right { width: 90px; height: 90px; }
 
   .reward-grid, .gift-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .reward-grid--stars { grid-template-columns: repeat(2, 1fr); }
   .packages-grid { grid-template-columns: repeat(2, 1fr); }
   .settings-section { padding: 1rem; }
 
